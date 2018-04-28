@@ -1,0 +1,25 @@
+{
+  "name": "react-firebase-context",
+  "author": "Julian Burr <hello@julianburr.de>",
+  "main": "dest/index.js",
+  "module": "dest/module.js",
+  "version": "0.0.1",
+  "dependencies": {
+    "firebase": "^4.13.1"
+  },
+  "peerDependencies": {
+    "react": "^16.3.2",
+    "react-dom": "^16.3.2"
+  },
+  "scripts": {
+    "build": "rollup -c"
+  },
+  "devDependencies": {
+    "babel-cli": "^6.26.0",
+    "babel-plugin-transform-object-rest-spread": "^6.26.0",
+    "babel-preset-es2015-rollup": "^3.0.0",
+    "babel-preset-react": "^6.24.1",
+    "rollup": "^0.58.2",
+    "rollup-plugin-babel": "^3.0.4"
+  }
+}
