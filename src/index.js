@@ -1,15 +1,24 @@
-import React, { PureComponent } from 'react';
+import React, { Component, Fragment } from 'react';
 import firebase from 'firebase/app';
 import 'firebase/auth';
 import 'firebase/firestore';
 
 const FireBaseContext = React.createContext({});
 
-class FireBaseProvider extends PureComponent {
+class FireBaseProvider extends Component {
   constructor (props) {
     super(props);
 
+    this.initApp = this.initApp.bind(this);
+    this.initAuth = this.initAuth.bind(this);
+    this.loginWithGoogle = this.loginWithGoogle.bind(this);
+    this.loginWithFacebook = this.loginWithFacebook.bind(this);
+    this.loginWithProvider = this.loginWithProvider.bind(this);
+    this.logout = this.logout.bind(this);
+    this.load = this.load.bind(this);
+
     this.state = {
+      ready: false,
       config: props,
       user: null,
       data: {} // could potentially use local storage as cache here?!
@@ -44,10 +53,10 @@ class FireBaseProvider extends PureComponent {
       console.log('user status changed', user);
       if (user) {
         console.log('user logged in', user);
-        this.setState({ user });
+        this.setState({ ready: true, user });
       } else {
         console.log('user logged out', user);
-        this.setState({ user: null });
+        this.setState({ ready: true, user: null });
       }
     });
     return firebase.auth().currentUser;
@@ -77,6 +86,45 @@ class FireBaseProvider extends PureComponent {
     return firebase.auth().signOut();
   }
 
+  load (hash, loader) {
+    const that = this;
+    that.setState({
+      data: {
+        ...that.state.data,
+        [hash]: {
+          status: 'loading',
+          data: null,
+          error: null
+        }
+      }
+    });
+    loader(firebase.firestore())
+      .then((result) => {
+        that.setState({
+          data: {
+            ...that.state.data,
+            [hash]: {
+              status: 'loaded',
+              data: result,
+              error: null
+            }
+          }
+        });
+      })
+      .catch((e) => {
+        that.setState({
+          data: {
+            ...that.state.data,
+            [hash]: {
+              status: 'error',
+              data: null,
+              error: e
+            }
+          }
+        });
+      });
+  }
+
   render () {
     console.log('this.state', this.state);
     return (
@@ -87,7 +135,7 @@ class FireBaseProvider extends PureComponent {
           loginWithFacebook: this.loginWithFacebook,
           logout: this.logout,
           load: this.load,
-          loadDocument: this.loadDocument
+          db: firebase.firestore()
         }}
       >
         {this.props.children}
@@ -97,7 +145,7 @@ class FireBaseProvider extends PureComponent {
 }
 
 const withFireBase = (WrappedComponent) =>
-  class WithFireBase extends PureComponent {
+  class WithFireBase extends Component {
     render () {
       return (
         <FireBaseContext.Consumer>
@@ -109,4 +157,31 @@ const withFireBase = (WrappedComponent) =>
     }
   };
 
-export { FireBaseProvider, FireBaseContext, withFireBase };
+class Loader extends Component {
+  constructor (props) {
+    super(props);
+    this.load = this.load.bind(this);
+    this.load(props);
+  }
+
+  load (props) {
+    const { hash, load, firebase } = props;
+    if (!firebase.data[hash] || firebase.data[hash].status === 'error') {
+      firebase.load(hash, load);
+    }
+  }
+
+  render () {
+    const { children, hash, firebase } = this.props;
+    const item = firebase.data[hash];
+    return (
+      <Fragment>
+        {children(item ? item : { status: 'loading', data: null, error: null })}
+      </Fragment>
+    );
+  }
+}
+
+Loader = withFireBase(Loader);
+
+export { FireBaseProvider, FireBaseContext, withFireBase, Loader };

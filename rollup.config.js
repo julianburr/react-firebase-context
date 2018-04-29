@@ -1,18 +1,18 @@
 import pkg from './package.json';
 import babel from 'rollup-plugin-babel';
 
-console.log('pkg', pkg);
-
 export default [
   {
-    entry: 'src/index.js',
-    dest: pkg.main,
+    input: 'src/index.js',
+    output: {
+      file: pkg.main,
+      sourceMap: true,
+      format: 'es'
+    },
     plugins: [
       babel({
         exclude: 'node_modules/**'
       })
-    ],
-    sourceMap: true,
-    format: 'es'
+    ]
   }
 ];
