@@ -5,7 +5,7 @@
   "module": "dest/module.js",
   "version": "0.0.1",
   "dependencies": {
-    "firebase": "^4.13.1"
+    "firebase": "^5.0.2"
   },
   "peerDependencies": {
     "react": "^16.3.2",
