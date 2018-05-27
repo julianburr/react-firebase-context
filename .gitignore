@@ -1,4 +1,10 @@
+# Ignore build
 dest/
-node_modules/
 
+# Regular ignores
+node_modules/
 yarn-error.log
+
+# Ignores for example folder (demp CRA)
+example/node_modules/
+example/yarn-error.log

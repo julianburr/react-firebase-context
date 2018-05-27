@@ -5,20 +5,26 @@
   "module": "dest/module.js",
   "version": "0.0.1",
   "dependencies": {
-    "firebase": "^5.0.2"
+    "core-decorators": "^0.20.0",
+    "firebase": "^5.0.2",
+    "invariant": "^2.2.4"
   },
   "peerDependencies": {
     "react": "^16.3.2",
     "react-dom": "^16.3.2"
   },
   "scripts": {
-    "build": "rollup -c"
+    "build": "rollup -c",
+    "release": "exposr publish",
+    "pre-release": "exposr publish --pre"
   },
   "devDependencies": {
     "babel-cli": "^6.26.0",
+    "babel-plugin-transform-decorators-legacy": "^1.3.4",
     "babel-plugin-transform-object-rest-spread": "^6.26.0",
     "babel-preset-es2015-rollup": "^3.0.0",
     "babel-preset-react": "^6.24.1",
+    "exposr": "^1.0.0",
     "rollup": "^0.58.2",
     "rollup-plugin-babel": "^3.0.4"
   }
