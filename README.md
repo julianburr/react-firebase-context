@@ -6,7 +6,7 @@ Since its completely experimental, I decided to work the new React Suspense feat
 
 ## Why?
 
-Dealing with data flows of any kind is always a huge pain in the butt. With this library I am trying to make it a bit simpler and less painful.
+Dealing with data flows of any kind is always a huge pain in the a\**. With this library I am trying to make it a bit simpler and less painful.
 
 The general concept is to have everything Firebase related (or any of its services) stored and passed through to your components via the React Context API.
 
@@ -43,7 +43,7 @@ The general setup to contect your app to your Firebase project is done by the `F
   storageBucket={props.storageBucket}
   messagingSenderId={props.messagingSenderId}
 >
-	<App />
+  <App />
 </FirebaseProvider>
 ```
 
@@ -77,14 +77,14 @@ class Example extends React.Component {
 
 ```jsx
 <Firestore query={({firestore}) => firestore.collection('users')}>
-	{({data}) => (
-  	<Fragment>
+  {({data}) => (
+    <Fragment>
       <h1>Users</h1>
-    	<ul>
-    		{data.map(user => (
+      <ul>
+        {data.map(user => (
           <li key={user.id}>{user.data.name}</li>
-        )}
-    	</ul>
+        ))}
+      </ul>
     </Fragment>
   )}
 </Firestore>
@@ -102,7 +102,7 @@ _Work in progress_
 
 - [ ] Add auth components for easier authentication flows / access of authentication data via context provider and consumer
 
-- [ ] Add similar structures for other components
+- [ ] Add similar structures for other services (Functions, Storage, ML Kit, ...)
 
 - [ ] Change build structure to be able to serve different services individually
 
