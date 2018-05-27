@@ -99,13 +99,9 @@ _Work in progress_
 ## Todo
 
 - [ ] Finish firestore components
-
 - [ ] Add auth components for easier authentication flows / access of authentication data via context provider and consumer
-
 - [ ] Add similar structures for other services (Functions, Storage, ML Kit, ...)
-
 - [ ] Change build structure to be able to serve different services individually
-
   ```js
   import { FirebaseProvider } from 'react-firebase-context';
   import { FirestoreProvider, Firestore } from 'react-firebase-context/firestore';
