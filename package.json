@@ -2,8 +2,7 @@
   "name": "react-firebase-context",
   "author": "Julian Burr <hello@julianburr.de>",
   "main": "dest/index.js",
-  "module": "dest/module.js",
-  "version": "0.0.1",
+  "version": "0.0.2",
   "dependencies": {
     "core-decorators": "^0.20.0",
     "firebase": "^5.0.2",
