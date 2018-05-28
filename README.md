@@ -1,4 +1,10 @@
+![logo](./logo.svg)
+
+<br />
+
 # react-firebase-context
+
+![npm](https://img.shields.io/npm/v/react-firebase-context.svg?style=for-the-badge) ![license](https://img.shields.io/github/license/julianburr/react-firebase-context.svg?style=for-the-badge)
 
 This is an experimental package, which aims to make dealing with Google Firebase services easier in React apps, espacially the data flow side of things.
 
@@ -94,12 +100,53 @@ In the core it will load the data from Firestore (using React Suspense to suspen
 
 ### Auth
 
+Setup again through provider component, which initialises the listener for authentication changes.
+
+```jsx
+<AuthProvider>
+  <App />
+</AuthProvider>
+```
+
+The actual auth data and functionality can then accessed via HoC ...
+
+```jsx
+@withAuth
+class Example extends React.Component {
+  componentDidMount () {
+    this.props.auth.ready // = indicator if initial auth status has been received yet
+    this.props.auth.user // = auth user data, or null if user is not logged in
+    this.props.auth.loginWith* // = auth methods for different providers
+    this.props.auth.logout // = logout method
+  }
+}
+```
+
+... or consumer component
+
+```jsx
+<Auth>
+  {({ready, user, loginWithGoogle}) => !ready ? (
+    <p>Initializing app...</p>
+  ) : !user ? (
+    <button onClick={loginWithGoogle}>
+      Login with Google
+    </button>
+  ) : (
+    <p>Hello {user.displayName}!</p>
+  )}
+</Auth>
+```
+
+### Functions / Storage / ML Kit
+
 _Work in progress_
 
 ## Todo
 
-- [ ] Finish firestore components
-- [ ] Add auth components for easier authentication flows / access of authentication data via context provider and consumer
+- [x] ~~Finish firestore components~~
+- [x] ~~Add auth components for easier authentication flows / access of authentication data via context provider and consumer~~
+- [ ] Allow defining auth provider settings (e.g. scopes) via props / args in the auth methods
 - [ ] Add similar structures for other services (Functions, Storage, ML Kit, ...)
 - [ ] Change build structure to be able to serve different services individually
   ```js
