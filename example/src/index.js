@@ -1,6 +1,10 @@
 import React, { unstable_AsyncMode as AsyncMode } from 'react';
 import ReactDOM from 'react-dom';
-import { FirebaseProvider, FirestoreProvider } from 'react-firebase-context';
+import {
+  FirebaseProvider,
+  FirestoreProvider,
+  AuthProvider
+} from 'react-firebase-context';
 import App from './App';
 
 import './index.css';
@@ -20,7 +24,9 @@ ReactDOM.render(
   <AsyncMode>
     <FirebaseProvider {...firebaseConfig}>
       <FirestoreProvider>
-        <App />
+        <AuthProvider>
+          <App />
+        </AuthProvider>
       </FirestoreProvider>
     </FirebaseProvider>
   </AsyncMode>,

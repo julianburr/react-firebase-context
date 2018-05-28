@@ -9,6 +9,8 @@ import {
   withFirestore
 } from './firestore/index.js';
 
+import { AuthContext, AuthProvider, withAuth, Auth } from './auth/index.js';
+
 const FirebaseContext = createContext({});
 
 let initialised = false;
@@ -55,5 +57,9 @@ export {
   FirestoreContext,
   FirestoreProvider,
   Firestore,
-  withFirestore
+  withFirestore,
+  AuthContext,
+  AuthProvider,
+  withAuth,
+  Auth
 };
