@@ -1,0 +1,54 @@
+{
+  "0.0.3": {
+    "commits": [
+      {
+        "status": [
+          "M"
+        ],
+        "files": [
+          "README.md"
+        ],
+        "abbrevHash": "2278003",
+        "hash": "2278003fdc9fe058d392be2861ce6376261337e2",
+        "subject": "docs: Update readme",
+        "authorName": "Julian Burr",
+        "type": null
+      },
+      {
+        "status": [
+          "A",
+          "A",
+          "A",
+          "A"
+        ],
+        "files": [
+          ".gitignore",
+          "index.js",
+          "package.json",
+          "yarn.lock"
+        ],
+        "abbrevHash": "ebf295c",
+        "hash": "ebf295c29a1a8a091086887a6f9391314506ab4b",
+        "subject": "chore: 🚀 initial commit",
+        "authorName": "Julian Burr",
+        "type": null
+      },
+      {
+        "status": [
+          "A",
+          "A"
+        ],
+        "files": [
+          "LICENSE",
+          "README.md"
+        ],
+        "abbrevHash": "d61a276",
+        "hash": "d61a2769ccd1e080f4e1f2f4764439b428713e2e",
+        "subject": "Initial commit",
+        "authorName": "Julian Burr",
+        "type": null
+      }
+    ],
+    "ts": 1528015049329
+  }
+}
