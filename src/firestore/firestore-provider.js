@@ -102,7 +102,7 @@ class FirestoreProvider extends Component {
                 // Seperately, push individual items as well
                 // This way we benefit from already loaded items from lists
                 // when we request them as items later on! :)
-                newState[item.__snapshot.ref.path] = {
+                newState[this.queryHash(item.__snapshot.ref)] = {
                   id: item.id,
                   data: item.data,
                   __snapshot: item.__snapshot
@@ -112,13 +112,17 @@ class FirestoreProvider extends Component {
             }, resolve);
           } else {
             // Item snapshot
-            this.setState({
-              [snapshot.ref.path]: {
-                id: snapshot.id,
-                data: snapshot.data(),
-                __snapshot: snapshot
-              }
-            });
+            this.setState(
+              (state) => ({
+                ...state,
+                [this.queryHash(snapshot.ref)]: {
+                  id: snapshot.id,
+                  data: snapshot.data(),
+                  __snapshot: snapshot
+                }
+              }),
+              resolve
+            );
           }
         });
       });
@@ -128,7 +132,11 @@ class FirestoreProvider extends Component {
   render () {
     return (
       <FirestoreContext.Provider
-        value={{ data: this.state, query: this.query }}
+        value={{
+          data: this.state,
+          query: this.query,
+          firestore: this.firestore
+        }}
       >
         {this.props.children}
       </FirestoreContext.Provider>

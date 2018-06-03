@@ -1,6 +1,5 @@
 {
   "name": "react-firebase-context",
-  "author": "Julian Burr <hello@julianburr.de>",
   "main": "dest/index.js",
   "version": "0.0.2",
   "dependencies": {
@@ -9,8 +8,8 @@
     "invariant": "^2.2.4"
   },
   "peerDependencies": {
-    "react": "^16.3.2",
-    "react-dom": "^16.3.2"
+    "react": "16.4.0-alpha.0911da3",
+    "react-dom": "16.4.0-alpha.0911da3"
   },
   "scripts": {
     "build": "rollup -c",
@@ -26,5 +25,15 @@
     "exposr": "^1.0.0",
     "rollup": "^0.58.2",
     "rollup-plugin-babel": "^3.0.4"
-  }
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/julianburr/react-firebase-context.git"
+  },
+  "author": "Julian Burr <hello@julianburr.de>",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/julianburr/react-firebase-context/issues"
+  },
+  "homepage": "https://github.com/julianburr/react-firebase-context"
 }

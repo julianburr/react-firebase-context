@@ -6,7 +6,11 @@ const withFirestore = (WrappedComponent) =>
     render () {
       return (
         <FirestoreContext.Consumer>
-          {(value) => <WrappedComponent firestore={value} {...this.props} />}
+          {({ firestore, data, query }) => {
+            firestore.data = data;
+            firestore.query = query;
+            return <WrappedComponent firestore={firestore} {...this.props} />;
+          }}
         </FirestoreContext.Consumer>
       );
     }

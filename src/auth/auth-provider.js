@@ -10,17 +10,21 @@ class AuthProvider extends Component {
   constructor (props) {
     super(props);
 
-    firebase.auth().onAuthStateChanged((user) => {
-      this.setState({
-        user,
-        ready: true
-      });
-    });
-
     this.state = {
       user: firebase.auth().currentUser,
       ready: false
     };
+  }
+
+  componentDidMount () {
+    firebase.auth().onAuthStateChanged((user) => {
+      if (user !== this.state.user) {
+        this.setState({
+          user,
+          ready: true
+        });
+      }
+    });
   }
 
   loginWithProvider (provider) {

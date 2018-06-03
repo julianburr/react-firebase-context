@@ -3,8 +3,8 @@
   "version": "0.1.0",
   "private": true,
   "dependencies": {
-    "react": "^16.4.0-alpha.0911da3",
-    "react-dom": "^16.4.0-alpha.0911da3",
+    "react": "16.4.0-alpha.0911da3",
+    "react-dom": "16.4.0-alpha.0911da3",
     "react-firebase-context": "file:../",
     "react-scripts": "1.1.4"
   },
