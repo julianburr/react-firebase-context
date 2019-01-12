@@ -22,7 +22,7 @@
     "babel-plugin-transform-object-rest-spread": "^6.26.0",
     "babel-preset-es2015-rollup": "^3.0.0",
     "babel-preset-react": "^6.24.1",
-    "exposr": "^1.0.0",
+    "exposr": "^1.0.3",
     "rollup": "^0.58.2",
     "rollup-plugin-babel": "^3.0.4"
   },
