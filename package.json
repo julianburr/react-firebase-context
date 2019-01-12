@@ -8,8 +8,8 @@
     "invariant": "^2.2.4"
   },
   "peerDependencies": {
-    "react": "16.4.0-alpha.0911da3",
-    "react-dom": "16.4.0-alpha.0911da3"
+    "react": "16.8.0-alpha.0",
+    "react-dom": "16.8.0-alpha.0"
   },
   "scripts": {
     "build": "rollup -c",
