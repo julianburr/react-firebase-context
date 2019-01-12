@@ -50,5 +50,53 @@
       }
     ],
     "ts": 1528015049329
+  },
+  "0.1.0": {
+    "commits": [
+      {
+        "status": [
+          "M"
+        ],
+        "files": [
+          "index.js"
+        ],
+        "abbrevHash": "02881b6",
+        "hash": "02881b601ad4169c7bcc694dc81f10ad25d5361e",
+        "subject": "fix: Fix changelog commit link",
+        "authorName": "Julian Burr",
+        "type": null
+      },
+      {
+        "status": [
+          "M"
+        ],
+        "files": [
+          "index.js"
+        ],
+        "abbrevHash": "29a2900",
+        "hash": "29a2900dadde4ce048db8e5e5a0e0ef8ddf1cd42",
+        "subject": "fix: Fix changelog md generation",
+        "authorName": "Julian Burr",
+        "type": null
+      },
+      {
+        "status": [
+          "D",
+          "D",
+          "M"
+        ],
+        "files": [
+          "CHANGELOG.md",
+          "changelog.json",
+          "index.js"
+        ],
+        "abbrevHash": "03e6928",
+        "hash": "03e69285f7170c0f71dd4b332c85802fe2931aac",
+        "subject": "fix: Try to fix getting list of new commits",
+        "authorName": "Julian Burr",
+        "type": null
+      }
+    ],
+    "ts": 1547312483245
   }
 }
