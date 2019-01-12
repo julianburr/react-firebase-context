@@ -1,13 +1,16 @@
-import React, { unstable_AsyncMode as AsyncMode } from 'react';
+import React, { Fragment, ConcurrentMode } from 'react';
 import ReactDOM from 'react-dom';
+import { BrowserRouter } from 'react-router-dom';
 import {
   FirebaseProvider,
+  AuthProvider,
   FirestoreProvider,
-  AuthProvider
+  StorageProvider
 } from 'react-firebase-context';
-import App from './App';
+import App from 'src/app';
+import { init as initTheme } from 'src/theme';
 
-import './index.css';
+const GlobalStyles = initTheme();
 
 const firebaseConfig = {
   apiKey: process.env.REACT_APP_FIREBASE_API_KEY,
@@ -21,14 +24,21 @@ const firebaseConfig = {
 const container = document.getElementById('root');
 
 ReactDOM.render(
-  <AsyncMode>
+  <ConcurrentMode>
     <FirebaseProvider {...firebaseConfig}>
-      <FirestoreProvider>
-        <AuthProvider>
-          <App />
-        </AuthProvider>
-      </FirestoreProvider>
+      <AuthProvider>
+        <FirestoreProvider>
+          <StorageProvider>
+            <BrowserRouter>
+              <Fragment>
+                <GlobalStyles />
+                <App />
+              </Fragment>
+            </BrowserRouter>
+          </StorageProvider>
+        </FirestoreProvider>
+      </AuthProvider>
     </FirebaseProvider>
-  </AsyncMode>,
+  </ConcurrentMode>,
   container
 );

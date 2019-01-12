@@ -1,29 +1,41 @@
-import React, { Component, Fragment } from 'react';
-import { Auth } from 'react-firebase-context';
+import React, { PureComponent, Suspense, Fragment } from 'react';
+import { Auth, Firestore, Storage } from 'react-firebase-context';
 
-import './App.css';
+import UserProjects from './projects';
+import UserFiles from './files';
 
-class App extends Component {
+class App extends PureComponent {
   render () {
     return (
-      <div className="App">
-        <header className="App-header">
-          <h1 className="App-title">React Firebase Context Example</h1>
-        </header>
-        <Auth>
-          {({ user, loginWithGoogle, logout, ready }) =>
-            ready ? user ? (
-              <Fragment>
-                <p>Hello {user.displayName}!</p>
-                <button onClick={logout}>Logout</button>
-              </Fragment>
-            ) : (
-              <button onClick={loginWithGoogle}>Login with Google</button>
-            ) : (
-              <p>Initialising app...</p>
-            )}
-        </Auth>
-      </div>
+      <Fragment>
+        <h1>Example App</h1>
+        <Suspense fallback={<p>Loading app....</p>}>
+          <Auth>
+            {({ getUserData, loginWithGoogle, logout }) => {
+              const user = getUserData();
+              if (user) {
+                return (
+                  <Fragment>
+                    <p>You are logged in!</p>
+                    <button onClick={logout}>Logout</button>
+
+                    <Suspense fallback={<p>Loading user data...</p>}>
+                      <UserProjects />
+                      <UserFiles />
+                    </Suspense>
+                  </Fragment>
+                );
+              }
+              return (
+                <Fragment>
+                  <p>You are not logged in!</p>
+                  <button onClick={loginWithGoogle}>Login With Google</button>
+                </Fragment>
+              );
+            }}
+          </Auth>
+        </Suspense>
+      </Fragment>
     );
   }
 }
