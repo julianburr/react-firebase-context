@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import AuthContext from './auth-context';
+import AuthContext from './context';
 
 const withAuth = (WrappedComponent) =>
   class WithAuth extends Component {

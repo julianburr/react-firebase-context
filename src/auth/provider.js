@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import { autobind } from 'core-decorators';
 import firebase from 'firebase/app';
-import AuthContext from './auth-context';
+import AuthContext from './context';
 
 import 'firebase/auth';
 
@@ -14,15 +14,20 @@ class AuthProvider extends Component {
       user: firebase.auth().currentUser,
       ready: false
     };
+
+    this.promise = new Promise((resolve) => {
+      this.resolve = resolve;
+    });
   }
 
   componentDidMount () {
     firebase.auth().onAuthStateChanged((user) => {
-      if (user !== this.state.user) {
-        this.setState({
-          user,
-          ready: true
-        });
+      const isReady = this.state.ready;
+      if (!isReady || user !== this.state.user) {
+        this.setState(
+          { user, ready: true },
+          !isReady ? () => this.resolve() : () => {}
+        );
       }
     });
   }
@@ -31,17 +36,19 @@ class AuthProvider extends Component {
     return firebase.auth().signInWithPopup(provider);
   }
 
-  loginWithGoogle () {
+  loginWithGoogle (options) {
+    const { scope } = options || {};
     const googleProvider = new firebase.auth.GoogleAuthProvider();
     googleProvider.addScope(
-      'https://www.googleapis.com/auth/contacts.readonly'
+      `https://www.googleapis.com/auth/${scope || 'contacts.readonly'}`
     );
     return this.loginWithProvider(googleProvider);
   }
 
-  loginWithFacebook () {
+  loginWithFacebook (options) {
+    const { scope } = options || {};
     const facebookProvider = new firebase.auth.FacebookAuthProvider();
-    facebookProvider.addScope('user_birthday');
+    facebookProvider.addScope(scope || 'user_birthday');
     return this.loginWithProvider(facebookProvider);
   }
 
@@ -49,11 +56,19 @@ class AuthProvider extends Component {
     return firebase.auth().signOut();
   }
 
+  getUserData () {
+    const { user, ready } = this.state;
+    if (ready) {
+      return user;
+    }
+    throw this.promise;
+  }
+
   render () {
     return (
       <AuthContext.Provider
         value={{
-          ...this.state,
+          getUserData: this.getUserData,
           loginWithProvider: this.loginWithProvider,
           loginWithGoogle: this.loginWithGoogle,
           loginWithFacebook: this.loginWithFacebook,

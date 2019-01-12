@@ -1,7 +1,7 @@
 import React, { Component, Fragment } from 'react';
 import { autobind } from 'core-decorators';
 import invariant from 'invariant';
-import withFirestore from './with-firestore';
+import withFirestore from './hoc';
 
 @withFirestore
 @autobind
@@ -15,8 +15,9 @@ class Firestore extends Component {
   }
 
   render () {
+    const { firestore } = this.props;
     const data = this.fetchData();
-    return <Fragment>{this.props.children({ data })}</Fragment>;
+    return <Fragment>{this.props.children({ firestore, data })}</Fragment>;
   }
 }
 

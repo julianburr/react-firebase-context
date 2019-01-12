@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import { autobind } from 'core-decorators';
 import firebase from 'firebase/app';
 import invariant from 'invariant';
-import FirestoreContext from './firestore-context';
+import FirestoreContext from './context';
 
 import 'firebase/firestore';
 

@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import FirestoreContext from './firestore-context';
+import FirestoreContext from './context';
 
 const withFirestore = (WrappedComponent) =>
   class WithFirestore extends Component {
