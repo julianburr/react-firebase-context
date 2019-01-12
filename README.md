@@ -148,6 +148,8 @@ class Example extends React.Component {
 </Suspense>
 ```
 
+The auth consumer (component and HoC) will suspend its rendering until it gets the initial user data when using `getUserData`. By using Suspense you can decide where and how you want to handle that initial state.
+
 ### Storage
 
 [Firebase Documentation for Storage](https://firebase.google.com/docs/storage/)
@@ -203,9 +205,10 @@ _Work in progress_
 
 - [x] ~~Finish firestore components~~
 - [x] ~~Add auth components for easier authentication flows / access of authentication data via context provider and consumer~~
-- [ ] Allow defining auth provider settings (e.g. scopes) via props / args in the auth methods
-- [ ] Add similar structures for other services (Functions, Storage, ML Kit, ...)
-- [ ] Change build structure to be able to serve different services individually
+- [x] ~~Add support for storage service~~
+- [x] ~~Allow defining auth provider settings (e.g. scopes) via props / args in the auth methods~~
+- [ ] Add similar structures for other services (Functions, ML Kit, ...)
+- [ ] Change build structure to be able to serve different services individually allowing tree-shaking unused services away
   ```js
   import { FirebaseProvider } from 'react-firebase-context';
   import { FirestoreProvider, Firestore } from 'react-firebase-context/firestore';
