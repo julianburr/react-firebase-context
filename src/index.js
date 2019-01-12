@@ -2,14 +2,19 @@ import React, { Component, createContext } from 'react';
 import firebase from 'firebase/app';
 import { autobind } from 'core-decorators';
 
+import { AuthContext, AuthProvider, withAuth, Auth } from './auth/index.js';
 import {
   FirestoreContext,
   FirestoreProvider,
   Firestore,
   withFirestore
 } from './firestore/index.js';
-
-import { AuthContext, AuthProvider, withAuth, Auth } from './auth/index.js';
+import {
+  StorageContext,
+  StorageProvider,
+  withStorage,
+  Storage
+} from './storage/index.js';
 
 const FirebaseContext = createContext({});
 
@@ -61,5 +66,9 @@ export {
   AuthContext,
   AuthProvider,
   withAuth,
-  Auth
+  Auth,
+  StorageContext,
+  StorageProvider,
+  withStorage,
+  Storage
 };
