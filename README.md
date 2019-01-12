@@ -36,9 +36,7 @@ yarn && yarn start
 
 ## Usage
 
-### Firebase
-
-The general setup to contect your app to your Firebase project is done by the `FirebaseProvider`, which takes all the config that you would usually pass to Firebase as props:
+The general setup to connect your app to your Firebase project is done by the `FirebaseProvider`, which takes all the config that you would usually pass to Firebase as props:
 
 ```jsx
 <FirebaseProvider 
@@ -53,9 +51,11 @@ The general setup to contect your app to your Firebase project is done by the `F
 </FirebaseProvider>
 ```
 
-This literally just runs `firebase.initializeApp` in the constructor, which allows you to access all the services Firebase offers. That also means that all service providers need to be placed within this `FirebaseProvider`.
+This literally just runs `firebase.initializeApp` in the constructor, which allows you to access all the services Firebase offers. That also means that all service providers need to be placed within this `FirebaseProvider`. It's generally a good idea to store this sensitive information in your projects `.env` file or similar. With CRA you can then access them via `process.env.REACT_APP_*`.
 
 ### Firestore
+
+[Firebase Documentation for Firestore](https://firebase.google.com/docs/firestore/quickstart)
 
 To set up the data context (which serves as cache) you need to use the `FirestoreProvider`. It takes all config arguments that you would usually pass into `firestore.settings` as props.
 
@@ -83,12 +83,14 @@ class Example extends React.Component {
 
 ```jsx
 <Firestore query={({firestore}) => firestore.collection('users')}>
-  {({data}) => (
+  {({data, firestore}) => (
     <Fragment>
       <h1>Users</h1>
       <ul>
         {data.map(user => (
-          <li key={user.id}>{user.data.name}</li>
+          <li key={user.id} onClick={() => firestore.collection('users').doc(user.id).delete()}>
+            {user.data.name}
+          </li>
         ))}
       </ul>
     </Fragment>
@@ -100,12 +102,16 @@ In the core it will load the data from Firestore (using React Suspense to suspen
 
 ### Auth
 
+[Firebase Documentation for Authentication](https://firebase.google.com/docs/auth/web/start)
+
 Setup again through provider component, which initialises the listener for authentication changes.
 
 ```jsx
-<AuthProvider>
-  <App />
-</AuthProvider>
+<FirebaseProvider {...config}>
+  <AuthProvider>
+    <App />
+  </AuthProvider>
+</FirebaseProvider>
 ```
 
 The actual auth data and functionality can then accessed via HoC ...
@@ -114,8 +120,7 @@ The actual auth data and functionality can then accessed via HoC ...
 @withAuth
 class Example extends React.Component {
   componentDidMount () {
-    this.props.auth.ready // = indicator if initial auth status has been received yet
-    this.props.auth.user // = auth user data, or null if user is not logged in
+    this.props.auth.getUserData // = get auth user data, or null if user is not logged in
     this.props.auth.loginWith* // = auth methods for different providers
     this.props.auth.logout // = logout method
   }
@@ -125,20 +130,72 @@ class Example extends React.Component {
 ... or consumer component
 
 ```jsx
-<Auth>
-  {({ready, user, loginWithGoogle}) => !ready ? (
-    <p>Initializing app...</p>
-  ) : !user ? (
-    <button onClick={loginWithGoogle}>
-      Login with Google
-    </button>
-  ) : (
-    <p>Hello {user.displayName}!</p>
-  )}
-</Auth>
+<Suspense fallback={<p>Init app...</p>}>
+  <Auth>
+    {({getUserData, loginWithGoogle, logout}) => {
+      const user = getUserData();
+      return !user ? (
+        <button onClick={loginWithGoogle}>
+          Login with Google
+        </button>
+      ) : (
+        <Fragment>
+          <p>Hello {user.displayName}!</p>
+          <button onClick={logout}>Logout</button>
+      )}
+    }
+  </Auth>
+</Suspense>
 ```
 
-### Functions / Storage / ML Kit
+### Storage
+
+[Firebase Documentation for Storage](https://firebase.google.com/docs/storage/)
+
+Same setup as for the other services. Use the storage provider wrapping everything in your app that needs access to the storage service functionality.
+
+```jsx
+<FirbaseProvider {...config}>
+
+</FirebaseProvider>
+```
+
+To get access to the storage functionality, you can use the HoC ...
+
+```jsx
+@withStorage
+class Example extends React.Component {
+  componentDidMount () {
+    this.props.storage // = firebase.storage()
+  }
+}
+```
+
+... or the consumer component
+
+```jsx
+<Storage>
+  {({storage}) => (
+    <form ref={e => this.form = e}>
+      <input
+        type="file"
+        onChange={e => {
+          const file = e.target.files[0];
+          if (file) {
+            storage.ref().child(file.name).put(file).then(() => {
+              this.form.reset();
+            })
+          }
+        }}
+      />
+    </form>
+  )}
+</Storage>
+```
+
+Note that in the documentation it is recommended to keep information regarding your storage in a database structure (i.e. Firestore), since Firebase Storage does not provide an API to query or even list directories or files based on certain criteria (other than their full path).
+
+### Functions / ML Kit
 
 _Work in progress_
 
