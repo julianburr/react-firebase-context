@@ -208,6 +208,7 @@ _Work in progress_
 - [x] ~~Add support for storage service~~
 - [x] ~~Allow defining auth provider settings (e.g. scopes) via props / args in the auth methods~~
 - [ ] Add similar structures for other services (Functions, ML Kit, ...)
+- [ ] Use hooks where sensible
 - [ ] Change build structure to be able to serve different services individually allowing tree-shaking unused services away
   ```js
   import { FirebaseProvider } from 'react-firebase-context';
