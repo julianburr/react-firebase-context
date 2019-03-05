@@ -3,6 +3,7 @@
   "main": "dest/index.js",
   "version": "0.1.0",
   "dependencies": {
+    "auto-bind": "^2.0.0",
     "core-decorators": "^0.20.0",
     "firebase": "^5.0.2",
     "invariant": "^2.2.4"

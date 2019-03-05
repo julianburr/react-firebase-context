@@ -7,7 +7,8 @@ import {
   FirestoreContext,
   FirestoreProvider,
   Firestore,
-  withFirestore
+  withFirestore,
+  hocWithFirestore
 } from './firestore/index.js';
 import {
   StorageContext,
@@ -22,7 +23,7 @@ let initialised = false;
 
 @autobind
 class FirebaseProvider extends Component {
-  constructor (props) {
+  constructor(props) {
     super(props);
 
     const config = this.getConfig(props);
@@ -36,7 +37,7 @@ class FirebaseProvider extends Component {
     }
   }
 
-  getConfig (props) {
+  getConfig(props) {
     return {
       apiKey: props.apiKey,
       authDomain: props.authDomain,
@@ -47,7 +48,7 @@ class FirebaseProvider extends Component {
     };
   }
 
-  render () {
+  render() {
     return (
       <FirebaseContext.Provider value={this.state}>
         {this.props.children}
@@ -63,6 +64,7 @@ export {
   FirestoreProvider,
   Firestore,
   withFirestore,
+  hocWithFirestore,
   AuthContext,
   AuthProvider,
   withAuth,
