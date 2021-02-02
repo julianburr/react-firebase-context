@@ -1,15 +1,14 @@
 {
   "name": "react-firebase-context",
   "main": "dest/index.js",
-  "version": "0.1.0",
+  "version": "0.2.0-rc.0",
   "dependencies": {
-    "core-decorators": "^0.20.0",
-    "firebase": "^5.0.2",
     "invariant": "^2.2.4"
   },
   "peerDependencies": {
-    "react": "16.8.0-alpha.0",
-    "react-dom": "16.8.0-alpha.0"
+    "firebase": ">=8.x",
+    "react": ">=16.x",
+    "react-dom": "16.x"
   },
   "scripts": {
     "build": "rollup -c",
@@ -17,14 +16,12 @@
     "pre-release": "exposr publish --pre"
   },
   "devDependencies": {
-    "babel-cli": "^6.26.0",
-    "babel-plugin-transform-decorators-legacy": "^1.3.4",
-    "babel-plugin-transform-object-rest-spread": "^6.26.0",
-    "babel-preset-es2015-rollup": "^3.0.0",
-    "babel-preset-react": "^6.24.1",
+    "@babel/core": "^7.12.10",
+    "@babel/preset-env": "^7.12.11",
+    "@babel/preset-react": "^7.12.10",
+    "@rollup/plugin-babel": "^5.2.3",
     "exposr": "^1.0.3",
-    "rollup": "^0.58.2",
-    "rollup-plugin-babel": "^3.0.4"
+    "rollup": "^2.38.4"
   },
   "repository": {
     "type": "git",

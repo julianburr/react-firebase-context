@@ -1,74 +1,16 @@
-import React, { Component, createContext } from 'react';
-import firebase from 'firebase/app';
-import { autobind } from 'core-decorators';
+import React from "react";
 
-import { AuthContext, AuthProvider, withAuth, Auth } from './auth/index.js';
-import {
-  FirestoreContext,
-  FirestoreProvider,
-  Firestore,
-  withFirestore
-} from './firestore/index.js';
-import {
-  StorageContext,
-  StorageProvider,
-  withStorage,
-  Storage
-} from './storage/index.js';
+import { AuthProvider, useAuth } from "./hooks/auth/index";
+import { FirestoreProvider } from "./hooks/firestore/context";
+import { useDocument } from "./hooks/firestore/document";
+import { useCollection } from "./hooks/firestore/collection";
 
-const FirebaseContext = createContext({});
-
-let initialised = false;
-
-@autobind
-class FirebaseProvider extends Component {
-  constructor (props) {
-    super(props);
-
-    const config = this.getConfig(props);
-    this.state = {
-      config
-    };
-
-    if (!initialised) {
-      firebase.initializeApp(config);
-      initialised = true;
-    }
-  }
-
-  getConfig (props) {
-    return {
-      apiKey: props.apiKey,
-      authDomain: props.authDomain,
-      databaseURL: props.databaseURL,
-      projectId: props.projectId,
-      storageBucket: props.storageBucket,
-      messagingSenderId: props.messagingSenderId
-    };
-  }
-
-  render () {
-    return (
-      <FirebaseContext.Provider value={this.state}>
-        {this.props.children}
-      </FirebaseContext.Provider>
-    );
-  }
+export function FirebaseProvider({ children }) {
+  return (
+    <AuthProvider>
+      <FirestoreProvider>{children}</FirestoreProvider>
+    </AuthProvider>
+  );
 }
 
-export {
-  FirebaseContext,
-  FirebaseProvider,
-  FirestoreContext,
-  FirestoreProvider,
-  Firestore,
-  withFirestore,
-  AuthContext,
-  AuthProvider,
-  withAuth,
-  Auth,
-  StorageContext,
-  StorageProvider,
-  withStorage,
-  Storage
-};
+export { useAuth, useDocument, useCollection };

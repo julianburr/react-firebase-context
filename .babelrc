@@ -1,4 +1,0 @@
-{
-  "presets": [ "es2015-rollup", "react" ],
-  "plugins": [ "transform-object-rest-spread", "transform-decorators-legacy" ]
-}
